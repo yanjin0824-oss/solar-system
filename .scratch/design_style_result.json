@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "skipped": false,
+  "source_path": "/Users/bytedance/test/vibelab-7",
+  "log": "/Users/bytedance/test/vibelab-7/.scratch/design_style.log",
+  "summary": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "failures": []
+}

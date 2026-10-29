@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "applicable": true,
+  "design_spec": "/private/Users/bytedance/test/vibelab-7/.scratch/design-spec.json",
+  "design_spec_sha256": "c29a634c4a34ca66b97b2b6042c00169a7d2338ea66e4dbf86d2914f7d0829f4",
+  "implementation_map": "/private/Users/bytedance/test/vibelab-7/.scratch/design_implementation_map.json",
+  "summary": {
+    "errors": 0,
+    "required_refs": 50,
+    "mapped_refs": 50
+  },
+  "errors": []
+}

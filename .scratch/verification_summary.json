@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "operational": true,
+  "clean": true,
+  "stale": false,
+  "status": "passed",
+  "allow_degraded": false,
+  "warnings": [],
+  "skips": [],
+  "adapter_hooks_agent_owned": true,
+  "note": "clean=false means a gate was skipped or degraded; --allow-degraded is operational-only, not skill-complete. Figma runs are still pending until the agent completes the d2c verify/cleanup hooks and records figma_hooks_result.json."
+}

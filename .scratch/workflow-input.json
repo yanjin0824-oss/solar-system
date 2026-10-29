@@ -1,0 +1,5 @@
+{
+  "intent": "帮我写一个pico空间版的 Interactive 3D Solar System：A glowing sun in the center with 4 or 5 stylized planets orbiting around it at different speeds. Users can click on a planet to focus the camera on it, popping up a sleek UI card with quick facts about that planet.",
+  "target": ".",
+  "generationMode": "new_project"
+}

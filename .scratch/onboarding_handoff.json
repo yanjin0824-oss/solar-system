@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "phase": "6_scaffold_handoff",
+  "producer_skill": "spatial-app-onboarding",
+  "consumer_skill": "spatial-design-to-app",
+  "scaffold_only": true,
+  "product_ui_implemented": false,
+  "template": "stage",
+  "package": "com.example.solarsystem.p6d63b1ca",
+  "package_source": "generated_default",
+  "entry_points": [
+    "app/src/main/java/com/example/solarsystem/p6d63b1ca/Main.kt",
+    "app/src/main/java/com/example/solarsystem/p6d63b1ca/platform/LaunchActivity.kt"
+  ],
+  "build_passed": true,
+  "launch_checked": false,
+  "launch_check_note": "The first runnable scaffold build passed; runtime launch is validated by the compose-app runtime gate.",
+  "resume_required": true,
+  "resume_skill": "spatial-design-to-app"
+}

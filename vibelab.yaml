@@ -1,0 +1,54 @@
+app:
+  id: "7699814751760662591"
+  name: 太阳系
+  slogan: 用空间指针选中行星，近距查看轨道与关键数据。
+  description: |-
+    # 太阳系
+
+    一个可交互的 3D 太阳系场景：发光的太阳位于中央，五颗风格化行星以不同速度沿轨道环绕运行。
+
+    ## 核心能力
+
+    - **空间指针选中**：用空间指针指向任意行星并点击，即可聚焦该行星并查看信息卡。
+    - **动态轨道**：水星、金星、地球、火星、木星按各自周期持续公转，直观呈现速度差异。
+    - **行星信息卡**：信息卡展示行星类型、简短介绍、距太阳距离、自转周期、公转周期与已知卫星数量。
+    - **聚焦与关闭**：选中后行星高亮并显示信息卡，点击关闭即可回到整体视角。
+
+    ## 使用方式
+
+    启动应用后会进入全虚拟的太空 Stage。将空间指针移到任意行星上并点击即可选中；点击关闭按钮返回整体轨道视图。
+
+    ## 适用场景
+
+    适合太空科普展示、天文教学演示与空间交互体验。
+  tags:
+    - 太空科普
+    - 3D互动
+    - 天文
+  category: application
+  icon: assets/icon.jpg
+  landscape: assets/landscape.png
+  detail_images:
+    - assets/detail-1.png
+    - assets/detail-2.png
+    - assets/detail-3.png
+    - assets/detail-4.png
+    - assets/detail-5.png
+  videos: []
+version:
+  name: 1.0.0
+  notes: |-
+    - 新增：五颗行星的 3D 轨道运行与聚焦高亮
+    - 新增：空间指针选中行星并弹出信息卡
+    - 新增：行星类型、距离、自转/公转周期与卫星数据展示
+    - 优化：中文化界面提示与行星资料
+    - 优化：全新的太阳系应用图标
+build:
+  repo_url: https://github.com/yanjin0824-oss/solar-system
+  repo_visibility: public
+  tech_stack: android_spatial
+  ai_tool: Trae CLI
+  ai_model: DeepSeek-V4.1-Flash
+  features:
+    - none
+  teammates: []

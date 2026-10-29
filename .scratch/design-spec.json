@@ -1,0 +1,1028 @@
+{
+  "schemaVersion": "1.0",
+  "metadata": {
+    "projectName": "Interactive 3D Solar System",
+    "sourceMode": "intent_only",
+    "revision": 2
+  },
+  "experience": {
+    "subject": "solar system",
+    "user": "curious spatial explorer",
+    "context": "standing in full space, at arm's length from an orrery",
+    "singleJob": "inspect a planet and learn one quick fact about it",
+    "space": "full",
+    "form": "stage_full",
+    "signature": "sun-centered orrery with a planet dossier card"
+  },
+  "theme": {
+    "scheme": "vibrant",
+    "colorScheme": {
+      "fillPrimary": {
+        "source": "vibrant",
+        "role": "fillPrimary"
+      },
+      "fillSecondary": {
+        "source": "vibrant",
+        "role": "fillSecondary"
+      },
+      "fillTertiary": {
+        "source": "vibrant",
+        "role": "fillTertiary"
+      },
+      "fillLight": {
+        "source": "vibrant",
+        "role": "fillLight"
+      },
+      "labelPrimaryLight": {
+        "source": "vibrant",
+        "role": "labelPrimaryLight"
+      },
+      "labelPrimary": {
+        "source": "vibrant",
+        "role": "labelPrimary"
+      },
+      "labelSecondary": {
+        "source": "vibrant",
+        "role": "labelSecondary"
+      },
+      "labelTertiary": {
+        "source": "vibrant",
+        "role": "labelTertiary"
+      },
+      "labelQuaternary": {
+        "source": "vibrant",
+        "role": "labelQuaternary"
+      },
+      "lightenHover": {
+        "source": "vibrant",
+        "role": "lightenHover"
+      },
+      "lightenPressed": {
+        "source": "vibrant",
+        "role": "lightenPressed"
+      },
+      "error": {
+        "source": "vibrant",
+        "role": "error"
+      },
+      "alert": {
+        "source": "vibrant",
+        "role": "alert"
+      },
+      "passable": {
+        "source": "vibrant",
+        "role": "passable"
+      },
+      "interaction": {
+        "source": "vibrant",
+        "role": "interaction"
+      },
+      "dividerLine": {
+        "source": "vibrant",
+        "role": "dividerLine"
+      }
+    },
+    "brandColors": {
+      "spaceBase": "#050714",
+      "spaceNebula": "#171C46",
+      "star": "#FFFFFF",
+      "sunCore": "#FFF3C4",
+      "sunGlow": "#FFB347",
+      "orbitLine": "#3A4166",
+      "focusRing": "#FFD27A",
+      "mercury": "#B8B2A6",
+      "venus": "#E8C27A",
+      "earth": "#4FA3D9",
+      "mars": "#C65D45",
+      "jupiter": "#D8A56A"
+    },
+    "typography": {
+      "headlineLarge": {
+        "family": "system-ui",
+        "sizeDp": 24,
+        "lineHeightDp": 30,
+        "weight": 700
+      },
+      "titleSmall": {
+        "family": "system-ui",
+        "sizeDp": 14,
+        "lineHeightDp": 18,
+        "weight": 600
+      },
+      "bodyLarge": {
+        "family": "system-ui",
+        "sizeDp": 16,
+        "lineHeightDp": 20,
+        "weight": 500
+      },
+      "bodyMedium": {
+        "family": "system-ui",
+        "sizeDp": 14,
+        "lineHeightDp": 18,
+        "weight": 500
+      },
+      "bodyMediumMultiline": {
+        "family": "system-ui",
+        "sizeDp": 14,
+        "lineHeightDp": 22,
+        "weight": 500
+      },
+      "bodySmall": {
+        "family": "system-ui",
+        "sizeDp": 12,
+        "lineHeightDp": 16,
+        "weight": 500
+      },
+      "labelSmall": {
+        "family": "system-ui",
+        "sizeDp": 11,
+        "lineHeightDp": 14,
+        "weight": 600
+      }
+    },
+    "spacing": {
+      "small": 8,
+      "regular": 16,
+      "medium": 24,
+      "large": 32
+    }
+  },
+  "surfaces": [
+    {
+      "id": "main",
+      "type": "stage_full",
+      "defaultSize": {
+        "width": 4,
+        "height": 3,
+        "depth": 4,
+        "unit": "m"
+      },
+      "minSize": {
+        "width": 3,
+        "height": 2.4,
+        "depth": 3,
+        "unit": "m"
+      },
+      "maxSize": {
+        "width": 6,
+        "height": 4.5,
+        "depth": 6,
+        "unit": "m"
+      },
+      "rootNodeId": "stage-root"
+    }
+  ],
+  "initialStateId": "overview",
+  "states": [
+    {
+      "id": "overview",
+      "surfaceRoots": {
+        "main": "stage-root"
+      }
+    },
+    {
+      "id": "planet-focus",
+      "surfaceRoots": {
+        "main": "stage-root"
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "id": "open-planet",
+      "from": "overview",
+      "to": "planet-focus",
+      "trigger": {
+        "nodeId": "scene",
+        "event": "planet-select"
+      }
+    },
+    {
+      "id": "close-planet",
+      "from": "planet-focus",
+      "to": "overview",
+      "trigger": {
+        "nodeId": "fact-close",
+        "event": "click-action"
+      }
+    },
+    {
+      "id": "dismiss-planet",
+      "from": "planet-focus",
+      "to": "overview",
+      "trigger": {
+        "nodeId": "fact-popup",
+        "event": "dismiss-request"
+      }
+    }
+  ],
+  "actions": [
+    {
+      "id": "select-planet",
+      "type": "set",
+      "purpose": "Record the planet the user selected and open its quick-facts card.",
+      "binding": "selectedPlanetId",
+      "value": "{{event.detail.planetId}}"
+    },
+    {
+      "id": "focus-planet",
+      "type": "transition",
+      "purpose": "Move from the overview to the focused planet state.",
+      "transitionId": "open-planet"
+    },
+    {
+      "id": "close-facts",
+      "type": "transition",
+      "purpose": "Return to the orbiting overview from the facts card.",
+      "transitionId": "close-planet"
+    },
+    {
+      "id": "dismiss-facts",
+      "type": "transition",
+      "purpose": "Return to the orbiting overview when the card is dismissed.",
+      "transitionId": "dismiss-planet"
+    }
+  ],
+  "dataCases": {
+    "normal": {
+      "selectedPlanetId": "earth",
+      "planets": [
+        {
+          "id": "mercury",
+          "name": "Mercury",
+          "type": "Terrestrial planet",
+          "fact": "Smallest planet; scorched by day and frozen by night.",
+          "stats": {
+            "distance": "0.39 AU",
+            "day": "58.6 Earth days",
+            "year": "88 Earth days",
+            "moons": "0"
+          }
+        },
+        {
+          "id": "venus",
+          "name": "Venus",
+          "type": "Terrestrial planet",
+          "fact": "A runaway greenhouse world with crushing clouds.",
+          "stats": {
+            "distance": "0.72 AU",
+            "day": "243 Earth days",
+            "year": "225 Earth days",
+            "moons": "0"
+          }
+        },
+        {
+          "id": "earth",
+          "name": "Earth",
+          "type": "Terrestrial planet",
+          "fact": "The only known world with liquid-water oceans and life.",
+          "stats": {
+            "distance": "1.00 AU",
+            "day": "24 hours",
+            "year": "365.25 days",
+            "moons": "1"
+          }
+        },
+        {
+          "id": "mars",
+          "name": "Mars",
+          "type": "Terrestrial planet",
+          "fact": "Iron-oxide deserts and the tallest volcano in the system.",
+          "stats": {
+            "distance": "1.52 AU",
+            "day": "24.6 hours",
+            "year": "687 Earth days",
+            "moons": "2"
+          }
+        },
+        {
+          "id": "jupiter",
+          "name": "Jupiter",
+          "type": "Gas giant",
+          "fact": "A gas giant with a storm larger than Earth.",
+          "stats": {
+            "distance": "5.20 AU",
+            "day": "9.9 hours",
+            "year": "11.9 Earth years",
+            "moons": "95"
+          }
+        }
+      ]
+    },
+    "fallback": {
+      "selectedPlanetId": "earth",
+      "planets": [
+        {
+          "id": "mercury",
+          "name": "Mercury",
+          "type": "Terrestrial planet",
+          "fact": "Detailed facts are unavailable for this planet right now.",
+          "stats": {
+            "distance": "0.39 AU",
+            "day": "—",
+            "year": "—",
+            "moons": "—"
+          }
+        },
+        {
+          "id": "venus",
+          "name": "Venus",
+          "type": "Terrestrial planet",
+          "fact": "Detailed facts are unavailable for this planet right now.",
+          "stats": {
+            "distance": "0.72 AU",
+            "day": "—",
+            "year": "—",
+            "moons": "—"
+          }
+        },
+        {
+          "id": "earth",
+          "name": "Earth",
+          "type": "Terrestrial planet",
+          "fact": "Detailed facts are unavailable for this planet right now.",
+          "stats": {
+            "distance": "1.00 AU",
+            "day": "—",
+            "year": "—",
+            "moons": "—"
+          }
+        },
+        {
+          "id": "mars",
+          "name": "Mars",
+          "type": "Terrestrial planet",
+          "fact": "Detailed facts are unavailable for this planet right now.",
+          "stats": {
+            "distance": "1.52 AU",
+            "day": "—",
+            "year": "—",
+            "moons": "—"
+          }
+        },
+        {
+          "id": "jupiter",
+          "name": "Jupiter",
+          "type": "Gas giant",
+          "fact": "Detailed facts are unavailable for this planet right now.",
+          "stats": {
+            "distance": "5.20 AU",
+            "day": "—",
+            "year": "—",
+            "moons": "—"
+          }
+        }
+      ]
+    },
+    "error": {
+      "selectedPlanetId": "earth",
+      "planets": [
+        {
+          "id": "mercury",
+          "name": "Mercury",
+          "type": "Data unavailable",
+          "fact": "Planetary data could not be loaded. Try another planet.",
+          "stats": {
+            "distance": "—",
+            "day": "—",
+            "year": "—",
+            "moons": "—"
+          }
+        },
+        {
+          "id": "venus",
+          "name": "Venus",
+          "type": "Data unavailable",
+          "fact": "Planetary data could not be loaded. Try another planet.",
+          "stats": {
+            "distance": "—",
+            "day": "—",
+            "year": "—",
+            "moons": "—"
+          }
+        },
+        {
+          "id": "earth",
+          "name": "Earth",
+          "type": "Data unavailable",
+          "fact": "Planetary data could not be loaded. Try another planet.",
+          "stats": {
+            "distance": "—",
+            "day": "—",
+            "year": "—",
+            "moons": "—"
+          }
+        },
+        {
+          "id": "mars",
+          "name": "Mars",
+          "type": "Data unavailable",
+          "fact": "Planetary data could not be loaded. Try another planet.",
+          "stats": {
+            "distance": "—",
+            "day": "—",
+            "year": "—",
+            "moons": "—"
+          }
+        },
+        {
+          "id": "jupiter",
+          "name": "Jupiter",
+          "type": "Data unavailable",
+          "fact": "Planetary data could not be loaded. Try another planet.",
+          "stats": {
+            "distance": "—",
+            "day": "—",
+            "year": "—",
+            "moons": "—"
+          }
+        }
+      ]
+    }
+  },
+  "nodes": [
+    {
+      "id": "stage-root",
+      "kind": "layout",
+      "role": "content",
+      "trigger": "always-visible",
+      "relationship": "peer",
+      "presentation": "inline",
+      "layout": {
+        "mode": "stack",
+        "overflow": "hidden"
+      },
+      "children": [
+        "scene",
+        "hint-layer",
+        "fact-popup"
+      ]
+    },
+    {
+      "id": "scene",
+      "kind": "domain_visual",
+      "rendererKey": "orrery-scene",
+      "purpose": "Show the glowing sun and five stylized planets orbiting at different speeds, and let the user select one.",
+      "role": "content",
+      "trigger": "always-visible",
+      "relationship": "peer",
+      "presentation": "inline",
+      "accessibilityLabel": "Interactive solar system. Click a planet to focus it.",
+      "props": {
+        "background": {
+          "base": "spaceBase",
+          "nebula": "spaceNebula",
+          "star": "star",
+          "starCount": 90,
+          "starSeed": 42
+        },
+        "sun": {
+          "core": "sunCore",
+          "glow": "sunGlow",
+          "radius": 54
+        },
+        "planets": [
+          {
+            "id": "mercury",
+            "color": "mercury",
+            "orbitRadius": 120,
+            "orbitDuration": 8,
+            "size": 10,
+            "startAngle": 20
+          },
+          {
+            "id": "venus",
+            "color": "venus",
+            "orbitRadius": 165,
+            "orbitDuration": 13,
+            "size": 15,
+            "startAngle": 130
+          },
+          {
+            "id": "earth",
+            "color": "earth",
+            "orbitRadius": 215,
+            "orbitDuration": 19,
+            "size": 16,
+            "startAngle": 240
+          },
+          {
+            "id": "mars",
+            "color": "mars",
+            "orbitRadius": 265,
+            "orbitDuration": 27,
+            "size": 12,
+            "startAngle": 310
+          },
+          {
+            "id": "jupiter",
+            "color": "jupiter",
+            "orbitRadius": 330,
+            "orbitDuration": 38,
+            "size": 26,
+            "startAngle": 80
+          }
+        ],
+        "selectedPlanetBinding": "selectedPlanetId",
+        "focusScale": 1.55
+      },
+      "parts": {
+        "sun": {
+          "appearance": {
+            "fill": "sunCore",
+            "radiusDp": 32
+          },
+          "states": {
+            "glow": {
+              "fill": "sunGlow"
+            }
+          }
+        },
+        "orbit": {
+          "appearance": {
+            "fill": "orbitLine",
+            "opacity": 0.55
+          }
+        },
+        "planetBody": {
+          "appearance": {
+            "fill": "fillSecondary",
+            "radiusDp": 32
+          },
+          "states": {
+            "selected": {
+              "fill": "focusRing",
+              "depthDp": 12
+            }
+          }
+        },
+        "star": {
+          "appearance": {
+            "fill": "star",
+            "radiusDp": 32,
+            "opacity": 0.8
+          }
+        },
+        "space": {
+          "appearance": {
+            "fill": "spaceBase"
+          }
+        },
+        "nebula": {
+          "appearance": {
+            "fill": "spaceNebula",
+            "opacity": 0.9
+          }
+        }
+      },
+      "events": {
+        "planet-select": "select-planet"
+      },
+      "visibleInStates": [
+        "overview",
+        "planet-focus"
+      ]
+    },
+    {
+      "id": "hint-layer",
+      "kind": "layout",
+      "role": "auxiliary",
+      "trigger": "always-visible",
+      "relationship": "supports",
+      "presentation": "inline",
+      "layout": {
+        "mode": "row",
+        "gapDp": 8,
+        "align": "center",
+        "paddingDp": {
+          "top": 32,
+          "right": 0,
+          "bottom": 0,
+          "left": 32
+        }
+      },
+      "children": [
+        "hint-icon",
+        "hint-text"
+      ],
+      "visibleInStates": [
+        "overview"
+      ]
+    },
+    {
+      "id": "hint-icon",
+      "kind": "spatialui",
+      "component": "sui-icon",
+      "assetId": "sun-icon",
+      "props": {
+        "size": 20,
+        "tint": "sunGlow"
+      }
+    },
+    {
+      "id": "hint-text",
+      "kind": "text",
+      "content": "Point at a planet and click to focus",
+      "textStyle": {
+        "typography": "bodyMedium",
+        "color": "labelPrimaryLight"
+      }
+    },
+    {
+      "id": "fact-popup",
+      "kind": "spatialui",
+      "component": "sui-spatial-popup",
+      "role": "detail",
+      "trigger": "selection-driven",
+      "relationship": "derives-from-selection",
+      "presentation": "popup",
+      "props": {
+        "horizontal-placement": "to-end-of",
+        "vertical-placement": "center",
+        "offset-y": 0,
+        "corner-radius": 20,
+        "default-min-width": 280,
+        "clipping-enabled": true,
+        "viewport-padding": 24,
+        "anchor-binding": "selectedPlanetId",
+        "dismiss-on-click-outside": false,
+        "dismiss-on-escape": true,
+        "offset-x": 32
+      },
+      "children": [
+        "fact-card"
+      ],
+      "events": {
+        "dismiss-request": "dismiss-facts"
+      },
+      "visibleInStates": [
+        "planet-focus"
+      ]
+    },
+    {
+      "id": "fact-card",
+      "kind": "layout",
+      "role": "detail",
+      "trigger": "selection-driven",
+      "relationship": "derives-from-selection",
+      "presentation": "popup",
+      "layout": {
+        "mode": "column",
+        "gapDp": 16,
+        "paddingDp": 24,
+        "widthDp": 340
+      },
+      "children": [
+        "fact-header",
+        "fact-body"
+      ]
+    },
+    {
+      "id": "fact-header",
+      "kind": "layout",
+      "layout": {
+        "mode": "row",
+        "gapDp": 12,
+        "align": "start",
+        "justify": "space-between"
+      },
+      "children": [
+        "fact-identity",
+        "fact-close"
+      ]
+    },
+    {
+      "id": "fact-identity",
+      "kind": "layout",
+      "layout": {
+        "mode": "row",
+        "gapDp": 12,
+        "align": "center"
+      },
+      "children": [
+        "fact-icon",
+        "fact-title-group"
+      ]
+    },
+    {
+      "id": "fact-icon",
+      "kind": "spatialui",
+      "component": "sui-icon",
+      "assetId": "planet-icon",
+      "props": {
+        "size": 32,
+        "tint": "earth"
+      },
+      "bindings": {
+        "tint": "selectedPlanet.color"
+      }
+    },
+    {
+      "id": "fact-title-group",
+      "kind": "layout",
+      "layout": {
+        "mode": "column",
+        "gapDp": 2
+      },
+      "children": [
+        "fact-title",
+        "fact-subtitle"
+      ]
+    },
+    {
+      "id": "fact-title",
+      "kind": "text",
+      "content": "Earth",
+      "textRole": "surface_title",
+      "textStyle": {
+        "typography": "headlineLarge",
+        "color": "labelPrimary"
+      },
+      "bindings": {
+        "text": "selectedPlanet.name"
+      }
+    },
+    {
+      "id": "fact-subtitle",
+      "kind": "text",
+      "content": "Terrestrial planet",
+      "textStyle": {
+        "typography": "bodyMedium",
+        "color": "labelSecondary"
+      },
+      "bindings": {
+        "text": "selectedPlanet.type"
+      }
+    },
+    {
+      "id": "fact-close",
+      "kind": "spatialui",
+      "component": "sui-icon-button",
+      "props": {
+        "size": "regular",
+        "navigation-action": "close"
+      },
+      "accessibilityLabel": "Close planet facts",
+      "children": [
+        "close-icon"
+      ],
+      "events": {
+        "click-action": "close-facts"
+      }
+    },
+    {
+      "id": "close-icon",
+      "kind": "spatialui",
+      "component": "sui-icon",
+      "assetId": "close-icon",
+      "props": {
+        "size": 24
+      }
+    },
+    {
+      "id": "fact-body",
+      "kind": "layout",
+      "layout": {
+        "mode": "column",
+        "gapDp": 12
+      },
+      "children": [
+        "fact-description",
+        "fact-divider",
+        "stat-grid",
+        "fact-note"
+      ]
+    },
+    {
+      "id": "fact-description",
+      "kind": "text",
+      "content": "The only known world with liquid-water oceans and life.",
+      "textStyle": {
+        "typography": "bodyMediumMultiline",
+        "color": "labelSecondary"
+      },
+      "bindings": {
+        "text": "selectedPlanet.fact"
+      }
+    },
+    {
+      "id": "fact-divider",
+      "kind": "spatialui",
+      "component": "sui-divider",
+      "props": {}
+    },
+    {
+      "id": "stat-grid",
+      "kind": "layout",
+      "layout": {
+        "mode": "grid",
+        "columns": 2,
+        "gapDp": 12
+      },
+      "children": [
+        "stat-distance",
+        "stat-day",
+        "stat-year",
+        "stat-moons"
+      ]
+    },
+    {
+      "id": "stat-distance",
+      "kind": "layout",
+      "layout": {
+        "mode": "column",
+        "gapDp": 2
+      },
+      "children": [
+        "stat-distance-label",
+        "stat-distance-value"
+      ]
+    },
+    {
+      "id": "stat-distance-label",
+      "kind": "text",
+      "content": "Distance from sun",
+      "textStyle": {
+        "typography": "bodySmall",
+        "color": "labelTertiary"
+      }
+    },
+    {
+      "id": "stat-distance-value",
+      "kind": "text",
+      "content": "1.00 AU",
+      "textStyle": {
+        "typography": "titleSmall",
+        "color": "labelPrimary"
+      },
+      "bindings": {
+        "text": "selectedPlanet.stats.distance"
+      }
+    },
+    {
+      "id": "stat-day",
+      "kind": "layout",
+      "layout": {
+        "mode": "column",
+        "gapDp": 2
+      },
+      "children": [
+        "stat-day-label",
+        "stat-day-value"
+      ]
+    },
+    {
+      "id": "stat-day-label",
+      "kind": "text",
+      "content": "Day length",
+      "textStyle": {
+        "typography": "bodySmall",
+        "color": "labelTertiary"
+      }
+    },
+    {
+      "id": "stat-day-value",
+      "kind": "text",
+      "content": "24 hours",
+      "textStyle": {
+        "typography": "titleSmall",
+        "color": "labelPrimary"
+      },
+      "bindings": {
+        "text": "selectedPlanet.stats.day"
+      }
+    },
+    {
+      "id": "stat-year",
+      "kind": "layout",
+      "layout": {
+        "mode": "column",
+        "gapDp": 2
+      },
+      "children": [
+        "stat-year-label",
+        "stat-year-value"
+      ]
+    },
+    {
+      "id": "stat-year-label",
+      "kind": "text",
+      "content": "Year length",
+      "textStyle": {
+        "typography": "bodySmall",
+        "color": "labelTertiary"
+      }
+    },
+    {
+      "id": "stat-year-value",
+      "kind": "text",
+      "content": "365.25 days",
+      "textStyle": {
+        "typography": "titleSmall",
+        "color": "labelPrimary"
+      },
+      "bindings": {
+        "text": "selectedPlanet.stats.year"
+      }
+    },
+    {
+      "id": "stat-moons",
+      "kind": "layout",
+      "layout": {
+        "mode": "column",
+        "gapDp": 2
+      },
+      "children": [
+        "stat-moons-label",
+        "stat-moons-value"
+      ]
+    },
+    {
+      "id": "stat-moons-label",
+      "kind": "text",
+      "content": "Known moons",
+      "textStyle": {
+        "typography": "bodySmall",
+        "color": "labelTertiary"
+      }
+    },
+    {
+      "id": "stat-moons-value",
+      "kind": "text",
+      "content": "1",
+      "textStyle": {
+        "typography": "titleSmall",
+        "color": "labelPrimary"
+      },
+      "bindings": {
+        "text": "selectedPlanet.stats.moons"
+      }
+    },
+    {
+      "id": "fact-note",
+      "kind": "text",
+      "content": "Stylized scale · quick facts",
+      "textStyle": {
+        "typography": "labelSmall",
+        "color": "labelQuaternary"
+      }
+    }
+  ],
+  "responsiveRules": [
+    {
+      "id": "compact-popup",
+      "surfaceId": "main",
+      "when": {
+        "maxWidthDp": 820
+      },
+      "overrides": [
+        {
+          "nodeId": "fact-card",
+          "layout": {
+            "mode": "column",
+            "gapDp": 12,
+            "paddingDp": 16,
+            "widthDp": 280
+          }
+        },
+        {
+          "nodeId": "hint-layer",
+          "layout": {
+            "mode": "row",
+            "gapDp": 8,
+            "align": "center",
+            "paddingDp": {
+              "top": 16,
+              "right": 0,
+              "bottom": 0,
+              "left": 16
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "id": "close-icon",
+      "kind": "icon",
+      "src": "icon70://7.0/ic_cross",
+      "purpose": "Dismiss the planet facts card.",
+      "alt": "Close"
+    },
+    {
+      "id": "planet-icon",
+      "kind": "icon",
+      "src": "icon70://7.0/ic_planet",
+      "purpose": "Identify the selected planet in the facts card.",
+      "alt": "Planet"
+    },
+    {
+      "id": "sun-icon",
+      "kind": "icon",
+      "src": "icon70://7.0/ic_sun",
+      "purpose": "Accompany the explore hint.",
+      "alt": "Sun"
+    }
+  ]
+}
