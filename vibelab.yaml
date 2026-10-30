@@ -38,10 +38,10 @@ app:
 version:
   name: 1.0.1
   notes: |-
+    - 优化：迁移至体积窗口容器（Volumetric WindowContainer），太阳系悬浮于共享空间
     - 优化：切换至公网 Maven 依赖仓库，提升构建可复现性
     - 优化：PICO Spatial SDK 更新至公网最新版本 6.1.9
     - 修复：解决公共构建环境的依赖解析失败问题
-    - 保持：五颗行星轨道运行、空间指针选中与行星信息卡体验
 build:
   repo_url: https://github.com/yanjin0824-oss/solar-system
   repo_visibility: public

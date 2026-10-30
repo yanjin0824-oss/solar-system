@@ -3,16 +3,16 @@
   "metadata": {
     "projectName": "Interactive 3D Solar System",
     "sourceMode": "intent_only",
-    "revision": 2
+    "revision": 3
   },
   "experience": {
     "subject": "solar system",
     "user": "curious spatial explorer",
-    "context": "standing in full space, at arm's length from an orrery",
+    "context": "seated at a shared desk, viewing a transparent volumetric orrery",
     "singleJob": "inspect a planet and learn one quick fact about it",
-    "space": "full",
-    "form": "stage_full",
-    "signature": "sun-centered orrery with a planet dossier card"
+    "space": "shared",
+    "form": "volumetric",
+    "signature": "sun-centered volumetric orrery with a planet dossier card"
   },
   "theme": {
     "scheme": "vibrant",
@@ -150,24 +150,24 @@
   "surfaces": [
     {
       "id": "main",
-      "type": "stage_full",
+      "type": "volumetric",
       "defaultSize": {
-        "width": 4,
-        "height": 3,
-        "depth": 4,
-        "unit": "m"
+        "width": 960,
+        "height": 960,
+        "depth": 960,
+        "unit": "dp"
       },
       "minSize": {
-        "width": 3,
-        "height": 2.4,
-        "depth": 3,
-        "unit": "m"
+        "width": 640,
+        "height": 640,
+        "depth": 640,
+        "unit": "dp"
       },
       "maxSize": {
-        "width": 6,
-        "height": 4.5,
-        "depth": 6,
-        "unit": "m"
+        "width": 1600,
+        "height": 1600,
+        "depth": 1600,
+        "unit": "dp"
       },
       "rootNodeId": "stage-root"
     }

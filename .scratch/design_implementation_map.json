@@ -2,30 +2,30 @@
   "schema_version": 1,
   "design_spec": {
     "path": "design-spec.json",
-    "sha256": "c29a634c4a34ca66b97b2b6042c00169a7d2338ea66e4dbf86d2914f7d0829f4"
+    "sha256": "5863c5e130acd909d6dd93eafc3aaf23b78caa3abac44c2eb091431e358d1fef"
   },
   "implementation": {
     "initialStateId": "overview",
     "surfaces": {
       "main": {
-        "type": "stage_full",
+        "type": "volumetric",
         "defaultSize": {
-          "width": 4,
-          "height": 3,
-          "depth": 4,
-          "unit": "m"
+          "width": 960,
+          "height": 960,
+          "depth": 960,
+          "unit": "dp"
         },
         "minSize": {
-          "width": 3,
-          "height": 2.4,
-          "depth": 3,
-          "unit": "m"
+          "width": 640,
+          "height": 640,
+          "depth": 640,
+          "unit": "dp"
         },
         "maxSize": {
-          "width": 6,
-          "height": 4.5,
-          "depth": 6,
-          "unit": "m"
+          "width": 1600,
+          "height": 1600,
+          "depth": 1600,
+          "unit": "dp"
         },
         "rootNodeId": "stage-root"
       }
@@ -593,7 +593,7 @@
       "file": "app/src/main/java/com/example/solarsystem/p6d63b1ca/Main.kt",
       "symbols": [
         "mainApp",
-        "DefaultStage",
+        "DefaultWindowContainer",
         "PicoTheme",
         "SolarSystemScreen"
       ],
@@ -703,9 +703,9 @@
       ],
       "evidence": [
         "fact-title",
-        "Distance from sun",
-        "Known moons",
-        "Stylized scale",
+        "距太阳距离",
+        "已知卫星",
+        "风格化比例",
         "headlineLarge",
         "bodyMediumMultiline",
         "R.drawable.ic_planet",
@@ -752,7 +752,7 @@
         "Text"
       ],
       "evidence": [
-        "Point at a planet and click to focus",
+        "指向行星并点击即可聚焦",
         "R.drawable.ic_sun",
         "labelPrimaryLight"
       ],
@@ -773,9 +773,9 @@
         "errorPlanets"
       ],
       "evidence": [
-        "Detailed facts are unavailable",
-        "Planetary data could not be loaded",
-        "Data unavailable"
+        "该行星的详细资料暂不可用",
+        "行星数据加载失败",
+        "数据暂不可用"
       ],
       "design_refs": [
         "data-case:normal",

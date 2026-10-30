@@ -37,15 +37,16 @@ For development, authoring, audit, unknown targets or arguments, ambiguity, or r
 
 ## Project: Interactive 3D Solar System
 
-This is a PICO Spatial SDK 6.2 Stage Full app. It renders a glowing sun and five
-stylized planets orbiting at different speeds, lets the user select a planet with
-a spatial pointer, and reveals an anchored fact card.
+This is a PICO Spatial SDK 6.2 **Volumetric WindowContainer in Shared Space** app.
+It renders a glowing sun and five stylized planets orbiting at different speeds,
+lets the user select a planet with a spatial pointer, and reveals an anchored fact
+card. The volume is transparent (`materialbackground=0`) with the base panel hidden.
 
 - Entry: `app/src/main/java/com/example/solarsystem/p6d63b1ca/Main.kt`
-- Stage scene: `ui/solar/components/SolarSystemScene.kt` (ECS entities, meshes,
-  materials, lights, panels, focus state)
+- Volume scene: `ui/solar/components/SolarSystemScene.kt` (ECS entities, meshes,
+  materials, lights, dark backdrop plane, panels, focus state)
 - Orbit/focus systems: `ui/solar/components/OrrerySystems.kt`
-- Stage host and pointer input: `ui/solar/components/OrreryStage.kt`
+- Volume host and pointer input: `ui/solar/components/OrreryStage.kt`
 - Fact card: `ui/solar/components/PlanetFactsCard.kt` (SpatialPopup + SpatialUI)
 - Hint panel: `ui/solar/components/ExploreHint.kt`
 - State: `ui/solar/SolarSystemViewModel.kt` + `SolarSystemUiState.kt`
@@ -62,12 +63,17 @@ adb shell am start -n com.example.solarsystem.p6d63b1ca/.platform.LaunchActivity
 ```
 
 SpatialUI-only UI rule: all 2D UI uses `com.pico.spatial.ui.design.*` inside
-`PicoTheme`; do not introduce Material/Material3. The Stage scene uses
+`PicoTheme`; do not introduce Material/Material3. The volume scene uses
 `SpatialView` + ECS entities and `AttachmentPanel` for the 2D hint and fact card.
 The card surface is the system `SpatialPopup` material; do not add app-authored
 backgrounds or borders.
 
+Manifest defaults: `pico.spatial.windowcontainer.style=2`, `defaultsize=960x960x960`,
+`defaultsize.unit=dp`, `materialbackground=0`, `volumebasepanel=1`,
+`captionbar=1`, `worldscaletype=2`.
+
 Known validation notes: the Web preview validates layout/logic only. Real-device
 comfort, occlusion, physical scale, and 3D camera behavior still need on-device
-review. Planet facts are stylized educational copy.
+review. Planet facts are stylized educational copy. The app UI copy is localized
+in Chinese.
 

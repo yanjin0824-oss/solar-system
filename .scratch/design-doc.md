@@ -4,7 +4,7 @@
 
 **Subject** — A stylized, sun-centered orrery. The brief is a playful astronomy exhibit rather than a data dashboard: five planets orbit a glowing sun at different speeds, and selecting one reveals a compact fact card.
 
-**Viewer & context** — A curious explorer standing in Full Space, roughly 1.5–2 m from a room-scale orrery. The scene is read primarily by looking around and pointing; the fact card is read at arm's length.
+**Viewer & context** — A curious explorer seated at a shared desk, viewing a transparent volumetric orrery that floats in Shared Space. The scene is read primarily by looking around and pointing; the fact card is read at arm's length.
 
 **The single job** — Inspect one planet at a time and learn one quick fact about it.
 
@@ -16,14 +16,14 @@
 | Focus on one planet | Position, scale, depth | Selecting a planet can pull the viewer toward that body while the rest of the system recedes; the focused planet and its card share one spatial anchor. | A flat app would swap a canvas for a detail panel; the sense of moving toward the selected body is lost. |
 | Read quick facts without losing context | Position, depth | A small anchored card appears beside the focused planet, keeping the planet visible as the context for the facts. | A modal or side panel would cover or disconnect the selected object. |
 
-The justification selects **Stage Full**: the task is an immersive, unbounded 3D subject where motion, orbit depth, and camera focus are the product.
+The justification selects a **Volumetric WindowContainer in Shared Space**: the orrery is a 3D subject inspected in the round, while the window keeps the user anchored in their real room.
 
 **Assumptions**
 
 | Assumption | Confidence | What changes if wrong |
 | --- | --- | --- |
 | The five planets are Mercury, Venus, Earth, Mars, and Jupiter with recognizable stylized colors. | High | The planet palette and facts would be replaced; the orbit geometry and card structure stay valid. |
-| The experience is a single Full Space stage, not a windowed app. | High | A Planar or Volumetric surface would require a different shell and a different popup placement contract. |
+| The experience is a single Shared Space volumetric window, not a Full Space Stage. | High | A Planar surface would flatten the orrery; a Stage would replace the room entirely. |
 | A short anchored popup is preferable to a persistent Subwindow for the fact card. | High | If the user needs persistent comparison, the card would become a Subwindow or a separate detail surface. |
 | Planet data is local and does not require a network request. | Medium | If facts are remote, the fallback and error data cases become live loading states. |
 
@@ -33,7 +33,7 @@ The justification selects **Stage Full**: the task is an immersive, unbounded 3D
 
 ### Direction A — Immersive orrery (chosen)
 
-A Full Space sun-centered orrery with five planets moving at different orbital speeds. Selecting a planet pulls it to the center of the view, dims the other bodies, and opens a small anchored dossier card beside it.
+A Shared Space volumetric sun-centered orrery with five planets moving at different orbital speeds. Selecting a planet pulls it to the center of the view, dims the other bodies, and opens a small anchored dossier card beside it.
 
 - Signature: a warm, glowing sun at the center of nested orbital rings.
 - Main risk: the card can occlude the focused planet if anchored poorly.
@@ -114,7 +114,7 @@ All 16 public `ColorScheme` roles inherit the same-name SpatialUI Vibrant role. 
 
 **Depth** — Depth is product-owned only in the scene: orbit radii and the selected planet's focus scale. The card is a SpatialPopup anchored beside the planet, not a manually z-offset window. No `rootMaterial` or per-node material fields are used.
 
-**Window-background premise** — This is a Stage surface; no Planar material shell is applied. The preview body remains the fixed environment `#DAD6D3` with no background image. The dark scene is a declared `domain_visual`, not an app root fill.
+**Window-background premise** — This is a Volumetric WindowContainer in Shared Space; no Planar material shell is applied. The volume is transparent (`materialbackground=0`) with the base panel hidden, so the orrery floats in the room over a dark backdrop plane. The preview body remains the fixed environment `#DAD6D3` with no background image.
 
 ### Signature element
 
@@ -124,9 +124,9 @@ The glowing sun at the center of five concentric orbit rings. The scene stays qu
 
 | Window / surface | Type | Content | Default | Min | Max |
 | --- | --- | --- | --- | --- | --- |
-| `main` | Stage Full | Sun, five orbiting planets, anchored planet facts card | 4 × 3 × 4 m | 3 × 2.4 × 3 m | 6 × 4.5 × 6 m |
+| `main` | Volumetric WindowContainer (Shared Space) | Sun, five orbiting planets, anchored planet facts card | 960 × 960 × 960 dp | 640 × 640 × 640 dp | 1600 × 1600 × 1600 dp |
 
-The browser preview was validated at 1440 × 900 and 700 × 600. The 700px case uses the compact card (280dp) and remains fully inside the viewport.
+The browser preview is validated at the 960 × 960 volume default and the 640 × 640 minimum. The compact card (280dp) is used below 820dp and remains fully inside the volume.
 
 ### Layout
 
@@ -219,8 +219,8 @@ The card is not a peer column. It is a small anchored surface that exists only f
 | --- | --- | --- |
 | ≥3 real alternatives with rejection reasons | Yes | Directions A/B/C and decision matrix above |
 | Every core task has a 2D counterfactual | Yes | Frame table |
-| Form/scale follows spatial justification | Yes | Stage Full selected from motion/depth/position |
-| Every window/surface size internally validated | Yes | Stage volume and 1440/700 browser checks |
+| Form/scale follows spatial justification | Yes | Volumetric WindowContainer selected from motion/depth/position |
+| Every window/surface size internally validated | Yes | 960dp volume and 960/640 browser checks |
 | Attachments justified vs None/in-place | Yes | SpatialPopup compared with Subwindow, Sheet, and inline |
 | Every peer region passes all six qualification tests | Yes | Only the scene is peer; hint and card are subordinate |
 | Component affordance route keeps non-peer content out of primary Row/Grid | Yes | Hint is inline auxiliary; card is a popup |
@@ -273,12 +273,12 @@ The embedded `design-spec.json` is byte-identical to the external file. No produ
 
 **Rendered evidence**
 
-- Screenshots: `.scratch/screenshots/overview-default.png` (1440×900), `.scratch/screenshots/focus-default.png` (1440×900), `.scratch/screenshots/focus-compact.png` (700×600).
+- Screenshots: `.scratch/screenshots/overview-default.png` (1200×1200 with a 960×960 volume canvas), `.scratch/screenshots/focus-default.png` (1200×1200 with a 960×960 volume canvas), `.scratch/screenshots/focus-compact.png` (800×800 with a 640×640 volume canvas).
 - Body computed style: `background-color: rgb(218, 214, 211)`, `background-image: none` in every captured state.
-- Stage shell: no Planar material shell is applied; this is a Stage root.
+- Volume shell: no Planar material shell is applied; the transparent volumetric window floats the orrery in Shared Space.
 - Overview pixel check: scene center is sun core `rgb(255, 243, 196)`; scene corner is deep space `rgb(7, 10, 27)`.
-- Focus default: selected Mars at the view center is gold (`rgb(200, 169, 111)` at the sampled antialiased center); the card surface is `rgb(221, 221, 221)`; the card is fully inside the 1440×813 page viewport.
-- Focus compact: selected Earth is gold (`rgb(206, 173, 112)`); the 280dp card is fully inside the 700×513 page viewport; card title renders at 24px/700 with a 30px line height.
+- Focus default: the card material surface is `rgb(221, 221, 221)` at the right of the focused planet; the card is presented beside the selected planet inside the volumetric window.
+- Focus compact: the 280dp card is presented beside the selected planet inside the 640×640 volume canvas; card title renders at 24px/700 with a 30px line height.
 - Card geometry: 340×306 at default, 280×286 at compact; the card begins 32px to the right of the planet anchor and does not overlap it.
 - State coverage: overview, Mars focus, close-button return, popup dismissal, error data, and fallback data were all exercised without console errors.
 - DOM mapping: every declared `spatialui` node has exactly one matching element and an open shadow root; no substituted or duplicate tags.
@@ -291,7 +291,7 @@ The embedded `design-spec.json` is byte-identical to the external file. No produ
 | Criterion | Met? | Evidence |
 | --- | --- | --- |
 | App's job is a clear decision/task outcome | Yes | Inspect one planet and read one fact |
-| Form/scale follows spatial justification | Yes | Full Space Stage from motion/depth/position |
+| Form/scale follows spatial justification | Yes | Shared Space Volumetric WindowContainer from motion/depth/position |
 | Spatialization justified affordance-by-affordance | Yes | Frame table |
 | ≥3 alternatives compared, rejects have reasons | Yes | Direction matrix |
 | Every surface records final default/min/max dimensions | Yes | 4×3×4 m / 3×2.4×3 m / 6×4.5×6 m |
@@ -301,7 +301,7 @@ The embedded `design-spec.json` is byte-identical to the external file. No produ
 | SpatialUI bundle inline; mapped tags registered and event-wired | Yes | `SUI_COMPONENTS` and DOM audit |
 | No unjustified native duplicate of a `sui-*` control | Yes | Only domain-visual planet hit targets are custom |
 | Component presentations match affordances | Yes | Scene inline; card popup; hint auxiliary inline |
-| Root leaves system window background unchanged | Yes | Stage root, no material shell |
+| Root leaves system window background unchanged | Yes | Transparent volumetric window, no material shell |
 | Structural layout/domain regions transparent | Yes | `app_surfaces=0/32` |
 | Preview backgrounds use canonical fill paths | Yes | Only declared part fills and domain-visual CSS |
 | No app-authored content borders or material fields | Yes | Discipline check |
@@ -327,3 +327,15 @@ The embedded `design-spec.json` is byte-identical to the external file. No produ
 **Device validation** — `not_performed` (Web validates logic/layout only; real-device comfort, occlusion, size, and performance not verified).
 
 **Verdict** — pass. The design package is complete, the spec is schema-valid and discipline-clean, the embedded JSON matches, the state machine is triggerable, and the rendered geometry and pixel checks pass at default and compact sizes.
+
+
+## Revision 3 — Shared Space migration (user request)
+
+The user requested that the experience move from a Full Space Stage to **Shared Space**.
+
+- Form: **Volumetric WindowContainer** (`Form.Volumetric`, 960×960×960 dp default, 640×640×640 min, 1600×1600×1600 max).
+- Window: transparent (`materialbackground=0`), base panel hidden, caption bar auto-hide, uniform resize, fixed world scale.
+- Scene: orrery root scale `0.30` at the volume center; dark `spaceBase` backdrop plane behind the planets for contrast; focus scale `0.48`; selected planet target `(0, 0.10, 0.16)`.
+- 2D surfaces: facts panel at `(0.24, 0.10, 0.16)`, hint panel at `(0, 0.40, -0.04)`. The facts card remains a `SpatialPopup` inside an ECS-attached `AttachmentPanel`.
+- The Web preview now validates a 960×960 volume canvas centered on the `#DAD6D3` environment; no Planar material shell is used.
+- The app UI copy is localized in Chinese; the design IR retains the English design facts.

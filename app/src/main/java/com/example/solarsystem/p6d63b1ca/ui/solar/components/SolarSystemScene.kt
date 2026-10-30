@@ -24,16 +24,14 @@ import com.pico.spatial.ui.foundation.content.SpatialViewAttachments
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
-import kotlin.math.sqrt
-import kotlin.random.Random
 
-private val BASE_POSITION = Vector3(0f, 1.2f, -2.2f)
-private val FOCUS_TARGET = Vector3(0f, 1.35f, -1.25f)
-private val FACTS_PANEL_POSITION = Vector3(0.45f, 1.35f, -1.25f)
-private val HINT_PANEL_POSITION = Vector3(0f, 1.95f, -1.8f)
-private const val FOCUS_SCALE = 1.6f
+private val BASE_POSITION = Vector3(0f, 0f, 0f)
+private val FOCUS_TARGET = Vector3(0f, 0.10f, 0.16f)
+private val FACTS_PANEL_POSITION = Vector3(0.24f, 0.10f, 0.16f)
+private val HINT_PANEL_POSITION = Vector3(0f, 0.40f, -0.04f)
+private const val BASE_SCALE = 0.30f
+private const val FOCUS_SCALE = 0.48f
 private const val SUN_RADIUS = 0.18f
-private const val STAR_COUNT = 60
 
 const val PANEL_FACTS = "planet_facts"
 const val PANEL_HINT = "explore_hint"
@@ -69,18 +67,18 @@ class SolarSystemSceneState {
 
         val root = Entity()
         root.components.set(
-            TransformComponent(BASE_POSITION, EulerAngles(0f, 0f, 0f), Vector3(1f))
+            TransformComponent(BASE_POSITION, EulerAngles(0f, 0f, 0f), Vector3(BASE_SCALE))
         )
-        val rootState = OrreryRootComponent(BASE_POSITION, 1f)
+        val rootState = OrreryRootComponent(BASE_POSITION, BASE_SCALE)
         root.components.set(rootState)
         rootEntity = root
         rootComponent = rootState
         content.addEntity(root)
 
+        buildBackdrop(content)
         buildSun(root)
         buildOrbits(root, planets)
         planets.forEach { planet -> buildPlanet(root, planet) }
-        buildStarfield(content)
         buildDirectionalLight(content)
 
         attachments.entity(PANEL_FACTS)?.let { panel ->
@@ -193,7 +191,7 @@ class SolarSystemSceneState {
         val light = Entity()
         ensureTransform(light)
         light.components.set(
-            PointLightComponent(SolarSystemColors.color4("sunGlow"), 1400f, 1.8f)
+            PointLightComponent(SolarSystemColors.color4("sunGlow"), 500f, 1.0f)
         )
         root.addChild(light)
     }
@@ -279,33 +277,15 @@ class SolarSystemSceneState {
         planetIdByEntity[entity] = planet.id
     }
 
-    private fun buildStarfield(content: SpatialViewContent) {
-        val starfield = Entity()
-        ensureTransform(starfield)
-        content.addEntity(starfield)
-        topLevelEntities.add(starfield)
-
-        val mesh = MeshResource.createSphere(0.008f)
+    private fun buildBackdrop(content: SpatialViewContent) {
+        val mesh = MeshResource.createPlane(0.9f, 0.9f, 0.06f)
         val material = UnlitMaterial.create(BlendingMode.OPAQUE).apply {
-            setBaseColor(SolarSystemColors.color4("star"))
-            setDepthWrite(false)
+            setBaseColor(SolarSystemColors.color4("spaceBase"))
         }
-        val random = Random(42)
-        repeat(STAR_COUNT) {
-            val u = random.nextFloat() * 2f - 1f
-            val theta = random.nextFloat() * (PI * 2.0).toFloat()
-            val radius = 4.5f + random.nextFloat() * 1.5f
-            val ring = sqrt((1f - u * u).coerceAtLeast(0f))
-            val star = ModelEntity(mesh, material)
-            ensureTransform(star).setPosition(
-                Vector3(
-                    radius * ring * cos(theta),
-                    1.6f + radius * u,
-                    radius * ring * sin(theta),
-                )
-            )
-            starfield.addChild(star)
-        }
+        val backdrop = ModelEntity(mesh, material)
+        ensureTransform(backdrop).setPosition(Vector3(0f, 0f, -0.40f))
+        content.addEntity(backdrop)
+        topLevelEntities.add(backdrop)
     }
 
     private fun buildDirectionalLight(content: SpatialViewContent) {

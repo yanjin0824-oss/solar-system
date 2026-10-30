@@ -4,16 +4,16 @@
     "kotlin_files": 18,
     "manifest_files": 1
   },
-  "container": "STAGE_FULL",
+  "container": "IN_VOLUME",
   "container_evidence": [
-    "manifest pico.spatial.stage.style=3 -> STAGE_FULL"
+    "manifest pico.spatial.windowcontainer.style=2 -> IN_VOLUME"
   ],
   "checks": {
     "root_match": {
       "passed": true,
       "failures": [],
       "evidence": [
-        "Main.kt: default stage root 'DefaultStage'"
+        "Main.kt: default window root 'DefaultWindowContainer'"
       ]
     },
     "entry_wired": {
@@ -36,20 +36,7 @@
       "passed": true,
       "failures": [],
       "evidence": {
-        "stage_manifest": {
-          "pico.spatial.stage.style": [
-            "3"
-          ],
-          "pico.spatial.stage.immersion": [
-            "100"
-          ],
-          "pico.spatial.stage.immersion_min": [
-            "100"
-          ],
-          "pico.spatial.stage.immersion_max": [
-            "100"
-          ]
-        }
+        "AndroidManifest.xml": "declares pico.spatial.windowcontainer.id"
       }
     },
     "stage_api_legality": {

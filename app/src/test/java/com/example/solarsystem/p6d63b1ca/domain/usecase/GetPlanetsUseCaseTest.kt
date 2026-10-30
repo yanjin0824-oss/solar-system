@@ -16,7 +16,7 @@ class GetPlanetsUseCaseTest {
         val planets = result.getOrThrow()
 
         assertEquals(5, planets.size)
-        assertEquals("Earth", planets.first { it.id == "earth" }.name)
+        assertEquals("地球", planets.first { it.id == "earth" }.name)
     }
 
     @Test
@@ -25,7 +25,7 @@ class GetPlanetsUseCaseTest {
 
         assertEquals(5, planets.size)
         assertEquals(
-            "Detailed facts are unavailable for this planet right now.",
+            "该行星的详细资料暂不可用。",
             planets.first().fact,
         )
         assertEquals("—", planets.first().stats.dayLength)
@@ -36,7 +36,7 @@ class GetPlanetsUseCaseTest {
         val planets = useCase(PlanetDataCase.Error).getOrThrow()
 
         assertEquals(5, planets.size)
-        assertEquals("Data unavailable", planets.first().type)
-        assertTrue(planets.first().fact.contains("could not be loaded"))
+        assertEquals("数据暂不可用", planets.first().type)
+        assertTrue(planets.first().fact.contains("加载失败"))
     }
 }

@@ -55,7 +55,7 @@ class SolarSystemViewModelTest {
         viewModel.onEvent(SolarSystemEvent.SelectPlanet("mars"))
 
         assertEquals("mars", viewModel.state.value.selectedPlanetId)
-        assertEquals("Mars", viewModel.state.value.selectedPlanet?.name)
+        assertEquals("火星", viewModel.state.value.selectedPlanet?.name)
         assertTrue(viewModel.state.value.isFocused)
     }
 
@@ -88,7 +88,7 @@ class SolarSystemViewModelTest {
         viewModel.onEvent(SolarSystemEvent.SetDataCase(PlanetDataCase.Error))
 
         assertEquals(PlanetDataCase.Error, viewModel.state.value.dataCase)
-        assertEquals("Data unavailable", viewModel.state.value.planets.first().type)
-        assertTrue(viewModel.state.value.planets.first().fact.contains("could not be loaded"))
+        assertEquals("数据暂不可用", viewModel.state.value.planets.first().type)
+        assertTrue(viewModel.state.value.planets.first().fact.contains("加载失败"))
     }
 }

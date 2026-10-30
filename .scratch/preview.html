@@ -19,11 +19,16 @@
   #preview-root {
     position: fixed;
     inset: 0;
-    overflow: hidden;
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .stage {
-    position: absolute;
-    inset: 0;
+    position: relative;
+    width: 960px;
+    height: 960px;
+    flex: 0 0 auto;
     overflow: hidden;
   }
   .orrery-scene {
@@ -171,16 +176,16 @@
   "metadata": {
     "projectName": "Interactive 3D Solar System",
     "sourceMode": "intent_only",
-    "revision": 2
+    "revision": 3
   },
   "experience": {
     "subject": "solar system",
     "user": "curious spatial explorer",
-    "context": "standing in full space, at arm's length from an orrery",
+    "context": "seated at a shared desk, viewing a transparent volumetric orrery",
     "singleJob": "inspect a planet and learn one quick fact about it",
-    "space": "full",
-    "form": "stage_full",
-    "signature": "sun-centered orrery with a planet dossier card"
+    "space": "shared",
+    "form": "volumetric",
+    "signature": "sun-centered volumetric orrery with a planet dossier card"
   },
   "theme": {
     "scheme": "vibrant",
@@ -318,24 +323,24 @@
   "surfaces": [
     {
       "id": "main",
-      "type": "stage_full",
+      "type": "volumetric",
       "defaultSize": {
-        "width": 4,
-        "height": 3,
-        "depth": 4,
-        "unit": "m"
+        "width": 960,
+        "height": 960,
+        "depth": 960,
+        "unit": "dp"
       },
       "minSize": {
-        "width": 3,
-        "height": 2.4,
-        "depth": 3,
-        "unit": "m"
+        "width": 640,
+        "height": 640,
+        "depth": 640,
+        "unit": "dp"
       },
       "maxSize": {
-        "width": 6,
-        "height": 4.5,
-        "depth": 6,
-        "unit": "m"
+        "width": 1600,
+        "height": 1600,
+        "depth": 1600,
+        "unit": "dp"
       },
       "rootNodeId": "stage-root"
     }
@@ -5515,7 +5520,8 @@ window.SUI_COMPONENTS = ["sui-text","sui-icon","sui-button","sui-icon-button","s
 
     const world = document.createElement("div");
     world.className = "orrery-world";
-    const fit = Math.min(1, (window.innerWidth - 64) / 760, (window.innerHeight - 64) / 760);
+    const previewSize = Number(new URLSearchParams(window.location.search).get("size")) || 960;
+    const fit = Math.min(1, (previewSize - 64) / 760, (previewSize - 64) / 760);
     world.style.setProperty("--fit-scale", String(Math.max(0.42, fit)));
 
     const orbitFill = cssToken(node.parts.orbit.appearance.fill);
@@ -5617,6 +5623,10 @@ window.SUI_COMPONENTS = ["sui-text","sui-icon","sui-button","sui-icon-button","s
     root.innerHTML = "";
     const stage = document.createElement("div");
     stage.className = "stage";
+    const surfaceForSize = spec.surfaces.find((item) => item.id === "main") || spec.surfaces[0];
+    const previewSize = Number(new URLSearchParams(window.location.search).get("size")) || surfaceForSize.defaultSize.width || 960;
+    stage.style.width = previewSize + "px";
+    stage.style.height = previewSize + "px";
     stage.dataset.state = currentStateId;
     stage.dataset.dataCase = dataCaseName;
     const state = spec.states.find((item) => item.id === currentStateId) || spec.states[0];

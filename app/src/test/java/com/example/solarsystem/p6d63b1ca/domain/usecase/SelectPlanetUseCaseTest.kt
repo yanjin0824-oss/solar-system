@@ -17,7 +17,7 @@ class SelectPlanetUseCaseTest {
     fun validIdReturnsPlanet() {
         val planet = useCase(planets, "jupiter")
 
-        assertEquals("Jupiter", planet?.name)
+        assertEquals("木星", planet?.name)
         assertEquals("jupiter", planet?.colorToken)
     }
 
