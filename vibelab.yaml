@@ -36,13 +36,12 @@ app:
     - assets/detail-5.png
   videos: []
 version:
-  name: 1.0.0
+  name: 1.0.1
   notes: |-
-    - 新增：五颗行星的 3D 轨道运行与聚焦高亮
-    - 新增：空间指针选中行星并弹出信息卡
-    - 新增：行星类型、距离、自转/公转周期与卫星数据展示
-    - 优化：中文化界面提示与行星资料
-    - 优化：全新的太阳系应用图标
+    - 优化：切换至公网 Maven 依赖仓库，提升构建可复现性
+    - 优化：PICO Spatial SDK 更新至公网最新版本 6.1.9
+    - 修复：解决公共构建环境的依赖解析失败问题
+    - 保持：五颗行星轨道运行、空间指针选中与行星信息卡体验
 build:
   repo_url: https://github.com/yanjin0824-oss/solar-system
   repo_visibility: public
