@@ -1,9 +1,0 @@
-{
-  "passed": true,
-  "reason": "gradle_project_discovered_cli_proxy_for_ide_sync",
-  "gradle_root": "/Users/bytedance/test/vibelab-7",
-  "module_path": ":app",
-  "ide_sync_required": true,
-  "ide_sync_note": "After creating or including a new Android module, run Android Studio: Sync Project with Gradle Files before expecting run configurations/module selection to appear immediately.",
-  "log": "/Users/bytedance/test/vibelab-7/.scratch/gradle_sync.log"
-}
